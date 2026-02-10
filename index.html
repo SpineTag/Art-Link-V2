@@ -13,7 +13,55 @@
 </head>
 
 <body>
-
+    <a href="pages/home.html" style="text-decoration: none;">
+        <h1>ArtLink</h1>
+    </a>
 </body>
+<style>
+ body {
+    margin: 0;
+    height: 100vh;
+    background: #0f0f0f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  h1 {
+    position: relative;
+    font-size: 4rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, black, white, black, white);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 4s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, black, white, black, white, black);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  h1:hover::after {
+    width: 100%;
+  }
+</style>
 
 </html>
