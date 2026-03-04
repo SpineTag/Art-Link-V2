@@ -4,64 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io/site.webmanifest">
+    <title>Art Link</title>
     <link rel="stylesheet" href="css/base/reset.css">
     <link rel="stylesheet" href="css/base/variables.css">
     <link rel="stylesheet" href="css/base/typography.css">
-    <link rel="stylesheet" href="css/components/navbar.css">
-    <link rel="stylesheet" href="css/components/footer.css">
+    <link rel="stylesheet" href="css/pages/index.css">
 </head>
 
-<body>
-    <a href="pages/home.html" style="text-decoration: none;">
+<body class="loaded">
+    <a href="pages/home.html" class="entry-link" aria-label="Enter Art Link">
         <h1>ArtLink</h1>
     </a>
 </body>
-<style>
- body {
-    margin: 0;
-    height: 100vh;
-    background: #0f0f0f;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  h1 {
-    position: relative;
-    font-size: 4rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    background: linear-gradient(90deg, black, white, black, white);
-    background-size: 300%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradientShift 4s ease infinite;
-  }
-
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  h1::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-    height: 3px;
-    width: 0%;
-    background: linear-gradient(90deg, black, white, black, white, black);
-    border-radius: 2px;
-    transition: width 0.4s ease;
-  }
-
-  h1:hover::after {
-    width: 100%;
-  }
-</style>
 
 </html>

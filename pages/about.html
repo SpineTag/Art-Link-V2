@@ -4,16 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/base/reset.css">
-    <link rel="stylesheet" href="css/base/variables.css">
-    <link rel="stylesheet" href="css/base/typography.css">
-    <link rel="stylesheet" href="css/components/navbar.css">
-    <link rel="stylesheet" href="css/components/footer.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+    <title>About | Art Link</title>
+    <link rel="stylesheet" href="../css/base/reset.css">
+    <link rel="stylesheet" href="../css/base/variables.css">
+    <link rel="stylesheet" href="../css/base/typography.css">
+    <link rel="stylesheet" href="../css/layout/grid.css">
+    <link rel="stylesheet" href="../css/components/navbar.css">
+    <link rel="stylesheet" href="../css/components/footer.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/pages/about.css">
 </head>
 
-<body>
+<body data-root="..">
+    <div id="navbar-slot"></div>
 
+    <main class="about-page">
+        <header class="about-hero section container">
+            <h1>About Art Link</h1>
+            <p>
+                Art Link is a digital showcase where visual stories, experiments, and original perspectives meet.
+                We focus on clean presentation, thoughtful curation, and artist-first discovery.
+            </p>
+        </header>
+
+        <section class="about-content section container">
+            <article class="about-card">
+                <h2>What We Do</h2>
+                <p>
+                    We publish featured works, maintain a curated gallery, and create a simple channel for clients,
+                    collaborators, and art lovers to connect with creators.
+                </p>
+            </article>
+
+            <article class="about-card">
+                <h2>Our Direction</h2>
+                <p>
+                    Art Link V2 is structured for long-term growth: reusable components, centralized design tokens,
+                    and page-specific modules that make updates faster and safer.
+                </p>
+            </article>
+
+            <article class="about-card">
+                <h2>Work With Us</h2>
+                <p>
+                    Looking for commissions, collaborations, or curation opportunities?
+                    Reach out through the contact page.
+                </p>
+                <a href="contact.html" class="btn">Get in Touch</a>
+            </article>
+        </section>
+    </main>
+
+    <div id="footer-slot"></div>
+
+    <script type="module" src="../js/main.js"></script>
 </body>
 
 </html>

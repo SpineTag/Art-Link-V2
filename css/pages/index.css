@@ -1,0 +1,53 @@
+body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.14), #000 60%);
+}
+
+.entry-link {
+    text-decoration: none;
+}
+
+.entry-link h1 {
+    position: relative;
+    font-size: clamp(2.5rem, 10vw, 5rem);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    background: linear-gradient(90deg, #3a3a3a, #fff, #3a3a3a, #fff);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 4s ease infinite;
+}
+
+.entry-link h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -12px;
+    width: 0;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #2b2b2b, #fff, #2b2b2b);
+    transition: width var(--transition-base);
+}
+
+.entry-link h1:hover::after {
+    width: 100%;
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0 50%;
+    }
+}

@@ -1,0 +1,43 @@
+:root {
+    --color-bg: #000;
+    --color-bg-dark: #0f0f0f;
+    --color-bg-panel: rgba(255, 255, 255, 0.05);
+    --color-bg-card: rgba(255, 255, 255, 0.03);
+    --color-text: #fff;
+    --color-text-muted: rgba(255, 255, 255, 0.68);
+    --color-text-muted-dark: rgba(255, 255, 255, 0.35);
+    --color-accent: #fff;
+    --color-border: rgba(255, 255, 255, 0.2);
+    --color-success: #2ea043;
+    --color-error: #f85149;
+
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 6rem;
+
+    --font-primary: "Inter", "Segoe UI", Tahoma, sans-serif;
+    --font-secondary: "Poppins", "Trebuchet MS", sans-serif;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.5rem;
+    --font-size-xl: 2rem;
+    --font-size-xxl: 4rem;
+
+    --container-max-width: 1200px;
+    --navbar-height: 80px;
+
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    --shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.35);
+
+    --z-navbar: 1000;
+    --z-modal: 2000;
+    --z-tooltip: 3000;
+}

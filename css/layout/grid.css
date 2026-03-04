@@ -1,0 +1,24 @@
+.container {
+    width: min(var(--container-max-width), calc(100% - (var(--spacing-md) * 2)));
+    margin-inline: auto;
+}
+
+.section {
+    padding: var(--spacing-xl) 0;
+}
+
+.section-title {
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.title-link {
+    color: inherit;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.title-link:hover {
+    border-color: rgba(255, 255, 255, 1);
+}

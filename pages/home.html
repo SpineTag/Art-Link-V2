@@ -4,17 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/base/reset.css">
-    <link rel="stylesheet" href="css/base/variables.css">
-    <link rel="stylesheet" href="css/base/typography.css">
-    <link rel="stylesheet" href="css/components/navbar.css">
-    <link rel="stylesheet" href="css/components/footer.css">
-    <link rel="stylesheet" href="css/pages/home.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+    <title>Home | Art Link</title>
+    <link rel="stylesheet" href="../css/base/reset.css">
+    <link rel="stylesheet" href="../css/base/variables.css">
+    <link rel="stylesheet" href="../css/base/typography.css">
+    <link rel="stylesheet" href="../css/layout/grid.css">
+    <link rel="stylesheet" href="../css/layout/hero.css">
+    <link rel="stylesheet" href="../css/components/navbar.css">
+    <link rel="stylesheet" href="../css/components/footer.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/pages/home.css">
 </head>
 
-<body>
+<body data-root="..">
+    <div id="navbar-slot"></div>
 
+    <main>
+        <header class="hero">
+            <div class="overlay"></div>
+            <div class="hero-content container">
+                <h1 class="title">Art Link</h1>
+                <p class="subtitle">Where imagination meets the digital canvas</p>
+                <a href="#featured" class="btn">View Featured Works</a>
+            </div>
+        </header>
+
+        <section id="featured" class="featured section container">
+            <h2 class="section-title">Featured Works</h2>
+            <div class="slider" aria-label="Featured works slider">
+                <div class="slide"><img src="https://picsum.photos/900/600?random=1" alt="Featured artwork 1"></div>
+                <div class="slide"><img src="https://picsum.photos/900/600?random=2" alt="Featured artwork 2"></div>
+                <div class="slide"><img src="https://picsum.photos/900/600?random=3" alt="Featured artwork 3"></div>
+                <div class="slide"><img src="https://picsum.photos/900/600?random=4" alt="Featured artwork 4"></div>
+                <div class="slide"><img src="https://picsum.photos/900/600?random=5" alt="Featured artwork 5"></div>
+            </div>
+
+            <div class="slider-controls">
+                <button id="prev" type="button" aria-label="Previous slide">&#10094;</button>
+                <button id="next" type="button" aria-label="Next slide">&#10095;</button>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery-section section">
+            <div class="container">
+                <h2 class="section-title"><a href="gallery.html" class="title-link">Gallery</a></h2>
+                <div class="gallery-preview">
+                    <div class="art-card"><img src="https://picsum.photos/500/500?random=1" alt="Gallery preview 1"></div>
+                    <div class="art-card"><img src="https://picsum.photos/500/500?random=2" alt="Gallery preview 2"></div>
+                    <div class="art-card"><img src="https://picsum.photos/500/500?random=3" alt="Gallery preview 3"></div>
+                    <div class="art-card"><img src="https://picsum.photos/500/500?random=4" alt="Gallery preview 4"></div>
+                    <div class="art-card"><img src="https://picsum.photos/500/500?random=5" alt="Gallery preview 5"></div>
+                    <div class="art-card"><img src="https://picsum.photos/500/500?random=6" alt="Gallery preview 6"></div>
+                    <div class="art-card"><img src="https://picsum.photos/500/500?random=7" alt="Gallery preview 7"></div>
+                    <div class="art-card"><img src="https://picsum.photos/500/500?random=8" alt="Gallery preview 8"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-slot"></div>
+
+    <script type="module" src="../js/main.js"></script>
 </body>
 
 </html>

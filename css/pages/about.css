@@ -1,0 +1,36 @@
+.about-hero {
+    text-align: center;
+    padding-top: var(--spacing-lg);
+}
+
+.about-hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    margin-bottom: var(--spacing-xs);
+}
+
+.about-hero p {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.about-card {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-card);
+    padding: var(--spacing-md);
+}
+
+.about-card h2 {
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.4rem;
+}
+
+.about-card .btn {
+    margin-top: var(--spacing-sm);
+}

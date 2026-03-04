@@ -1,0 +1,94 @@
+.featured {
+    position: relative;
+}
+
+.slider {
+    position: relative;
+    width: min(100%, 980px);
+    height: min(60vh, 620px);
+    margin-inline: auto;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    transform: translateX(100%);
+    transition: transform 0.8s ease;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(45%);
+    transition: filter var(--transition-base), transform var(--transition-base);
+}
+
+.slide img:hover {
+    filter: grayscale(0);
+    transform: scale(1.02);
+}
+
+.slider-controls {
+    margin-top: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.slider-controls button {
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-accent);
+    cursor: pointer;
+    transition: background var(--transition-base), color var(--transition-base), transform var(--transition-base);
+}
+
+.slider-controls button:hover {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    transform: translateY(-2px);
+}
+
+.gallery-section {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.gallery-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.art-card {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--color-bg-card);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.art-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+}
+
+.art-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    filter: grayscale(20%);
+    transition: filter var(--transition-base), transform var(--transition-base);
+}
+
+.art-card:hover img {
+    filter: grayscale(0);
+    transform: scale(1.05);
+}
