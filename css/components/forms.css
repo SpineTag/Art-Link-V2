@@ -32,6 +32,51 @@
     font-size: 0.92rem;
 }
 
+.form-row.small input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    border-radius: 0.3rem;
+    background: rgba(255, 255, 255, 0.02);
+    display: inline-grid;
+    place-content: center;
+    transition: border-color var(--transition-fast),
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.form-row.small input[type="checkbox"]::before {
+    content: "";
+    width: 0.55rem;
+    height: 0.3rem;
+    border-left: 2px solid var(--color-bg);
+    border-bottom: 2px solid var(--color-bg);
+    transform: rotate(-45deg) scale(0);
+    transform-origin: center;
+    transition: transform var(--transition-fast);
+}
+
+.form-row.small input[type="checkbox"]:checked {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+.form-row.small input[type="checkbox"]:checked::before {
+    transform: rotate(-45deg) scale(1);
+}
+
+.form-row.small input[type="checkbox"]:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.7);
+    outline-offset: 2px;
+}
+
+.form-row.small label:hover input[type="checkbox"] {
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
 .status {
     margin-top: var(--spacing-sm);
     padding: 0.7rem 0.9rem;
