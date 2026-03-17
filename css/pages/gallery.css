@@ -70,8 +70,11 @@
 }
 
 .viewer img {
-    width: min(90vw, 1000px);
+    max-width: 90vw;
     max-height: 86vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-soft);
 }
