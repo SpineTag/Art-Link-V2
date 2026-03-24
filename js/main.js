@@ -89,7 +89,7 @@ function initSecretPassion() {
 
         if (clicks >= 3) {
             clicks = 0;
-            window.location.href = "pages/passion.html";
+            window.location.href = ".../pages/passion.html";
         }
     });
 }
