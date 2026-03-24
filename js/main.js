@@ -246,11 +246,17 @@ function initContactForm() {
         } catch (error) {
             console.error(error);
 
-            if (error.message.includes("Failed to fetch") || error.message.includes("ERR_CERT_AUTHORITY_INVALID")) {
-                showStatus("Network error: unable to reach form submission endpoint (SSL issue).\nPlease ensure your browser/system trusts HTTPS certificates, or try one of these options: 1) use Formsubmit in a standard browser, 2) use another service (Formspree), 3) deploy to GitHub Pages and use the direct form endpoint.", true);
-            } else {
-                showStatus(error.message || "An error occurred while sending your message. Please try again.", true);
+            const isNetworkError = error.message.includes("Failed to fetch") || error.message.includes("ERR_CERT_AUTHORITY_INVALID") || error.message.includes("NetworkError");
+
+            if (isNetworkError) {
+                showStatus("Network/SSL issue detected. Falling back to native form submit for reliability.", true);
+                // Note: this bypasses JS submission and uses standard HTML form post.
+                form.removeEventListener("submit", arguments.callee);
+                form.submit();
+                return;
             }
+
+            showStatus(error.message || "An error occurred while sending your message. Please try again.", true);
         } finally {
             if (submitBtn) {
                 submitBtn.disabled = false;
