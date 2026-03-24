@@ -75,6 +75,25 @@ function initFooterYear() {
     }
 }
 
+function initSecretPassion() {
+    const target = document.getElementById("secret-passion");
+    if (!target) {
+        return;
+    }
+
+    let clicks = 0;
+    target.style.cursor = "pointer";
+
+    target.addEventListener("click", () => {
+        clicks += 1;
+
+        if (clicks >= 3) {
+            clicks = 0;
+            window.location.href = "pages/passion.html";
+        }
+    });
+}
+
 function initGalleryViewer() {
     const viewer = qs(".viewer");
     const viewerImg = document.getElementById("viewer-img");
@@ -283,6 +302,7 @@ async function bootstrap() {
 
     if (hasFooter) {
         initFooterYear();
+        initSecretPassion();
     }
 
     initFeaturedSlider();

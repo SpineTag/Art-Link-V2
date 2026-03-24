@@ -1,0 +1,89 @@
+.passions-page,
+.passion-page {
+    min-height: 100vh;
+    background: radial-gradient(circle farthest-corner at 20% 20%, #382a66, #1a0f31 45%, #100717 100%);
+    color: var(--color-text);
+    overflow: hidden;
+}
+
+.passion-hero {
+    text-align: center;
+    padding: 6rem 1rem 4rem;
+}
+
+.passion-hero h1 {
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    color: #ff71ce;
+    text-shadow: 0 0 28px rgba(255, 113, 206, 0.6), 0 0 40px rgba(50, 20, 180, 0.5);
+    animation: neon 2s ease-in-out infinite alternate;
+}
+
+.passion-hero p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: #ffccf9;
+}
+
+.cubes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    max-width: 42rem;
+    margin: 0 auto;
+}
+
+.cube {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.8rem;
+    background: linear-gradient(145deg, #ff7efd, #8f5af5);
+    box-shadow: 0 0 25px rgba(255, 115, 215, 0.4);
+    animation: float 4s ease-in-out infinite;
+}
+
+.cube:nth-child(odd) {
+    animation-duration: 3.2s;
+}
+
+.cube:nth-child(even) {
+    animation-duration: 3.7s;
+    background: linear-gradient(145deg, #6d6eff, #ffcb2e);
+}
+
+.passion-content {
+    padding: 3rem 1rem 4rem;
+    text-align: center;
+}
+
+.passion-content h2 {
+    font-size: clamp(1.6rem, 5vw, 3rem);
+    color: #8ae8ff;
+}
+
+.passion-content p {
+    max-width: 34rem;
+    margin: 1rem auto;
+    color: #e2d6ff;
+}
+
+.text-glow {
+    margin-top: 1.5rem;
+    font-size: 3.5rem;
+    letter-spacing: 0.3rem;
+    animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-1rem) rotate(4deg); }
+}
+
+@keyframes neon {
+    0% { text-shadow: 0 0 24px rgba(255,255,255,0.7), 0 0 40px rgba(255,113,206,0.75); }
+    100% { text-shadow: 0 0 16px rgba(255,255,255,0.45), 0 0 60px rgba(145,0,218,0.95); }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { color: #ffea4a; text-shadow: 0 0 20px #ffea4a, 0 0 40px #ff9ef8, 0 0 80px #abfaa1; }
+    50% { color: #82f4ff; text-shadow: 0 0 24px #82f4ff, 0 0 44px #7d5fff, 0 0 110px #fda3ff; }
+}
