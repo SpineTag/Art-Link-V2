@@ -79,9 +79,10 @@ function initGalleryViewer() {
     const viewer = qs(".viewer");
     const viewerImg = document.getElementById("viewer-img");
     const closeBtn = qs(".close", viewer || document);
+    const galleryGrid = qs(".gallery-grid");
     const images = qsa(".gallery-grid .item img");
 
-    if (!viewer || !viewerImg || !closeBtn || !images.length) {
+    if (!viewer || !viewerImg || !closeBtn || !galleryGrid || !images.length) {
         return;
     }
 
@@ -99,9 +100,77 @@ function initGalleryViewer() {
         document.body.classList.remove("no-scroll");
     };
 
-    images.forEach((img) => {
+    const attachImageClick = (img) => {
         on(img, "click", () => openViewer(img));
-    });
+    };
+
+    images.forEach(attachImageClick);
+
+    const getImageSize = (index) => {
+        // Alternate tall/wide to preserve variety.
+        const type = index % 3;
+
+        if (type === 0) return "900/1200";
+        if (type === 1) return "900/1500";
+        return "1400/900";
+    };
+
+    let nextImageIndex = galleryGrid.querySelectorAll(".item").length + 1;
+    const infiniteBatchSize = 4;
+
+    const createGalleryItem = (index) => {
+        const size = getImageSize(index);
+        const url = `https://picsum.photos/${size}?${Date.now()}-${index}`;
+        const alt = `Gallery item ${index}`;
+        const item = document.createElement("div");
+        item.className = `item ${index % 4 === 0 ? "wide" : index % 5 === 0 ? "tall" : ""}`.trim();
+
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = alt;
+        item.appendChild(img);
+
+        attachImageClick(img);
+        return item;
+    };
+
+    const appendGalleryBatch = () => {
+        for (let i = 0; i < infiniteBatchSize; i += 1) {
+            const item = createGalleryItem(nextImageIndex);
+            galleryGrid.appendChild(item);
+            nextImageIndex += 1;
+        }
+
+        observeLastItem();
+    };
+
+    let observer;
+
+    const observeLastItem = () => {
+        const lastItem = galleryGrid.querySelector(".item:last-child");
+        if (!lastItem) {
+            return;
+        }
+
+        if (observer) {
+            observer.disconnect();
+        }
+
+        observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    appendGalleryBatch();
+                }
+            });
+        }, {
+            rootMargin: "200px",
+            threshold: 0.1
+        });
+
+        observer.observe(lastItem);
+    };
+
+    observeLastItem();
 
     on(closeBtn, "click", closeViewer);
     on(viewer, "click", (event) => {
@@ -116,6 +185,7 @@ function initGalleryViewer() {
         }
     });
 }
+
 
 function initContactForm() {
     const form = document.getElementById("contactForm");
