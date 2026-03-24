@@ -40,7 +40,7 @@ app.post("/api/contact", async (req, res) => {
 
         const mailOptions = {
             from: `\"Art Link Contact Form\" <${process.env.SMTP_USER}>`,
-            to: process.env.CONTACT_RECEIVER || "epenete.ujeneza@ebkrw.org",
+            to: process.env.CONTACT_RECEIVER || "ujepenete2020@gmail.com",
             subject: subject || "New message from Art Link website",
             text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject || "(none)"}\nMessage:\n${message}`,
             html: `<p><strong>Name:</strong> ${name}</p>
