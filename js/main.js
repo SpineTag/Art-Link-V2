@@ -226,16 +226,19 @@ function initContactForm() {
         }
 
         try {
+            const formData = new FormData(form);
+
             const response = await fetch(form.action, {
                 method: form.method || "POST",
-                body: new FormData(form),
+                body: formData,
                 headers: {
-                    Accept: "application/json"
+                    "Accept": "application/json"
                 }
             });
 
             if (!response.ok) {
-                throw new Error("Message submission failed.");
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || "Message submission failed.");
             }
 
             showStatus("Thanks, your message has been sent. We will reply shortly.");
