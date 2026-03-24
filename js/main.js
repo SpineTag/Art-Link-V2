@@ -280,14 +280,20 @@ function initEasterEgg() {
     };
 
     document.addEventListener("keydown", (event) => {
-        if (event.key === secretSequence[keyIndex]) {
+        const key = event.key.toLowerCase();
+        const expected = secretSequence[keyIndex].toLowerCase();
+
+        if (key === expected) {
             keyIndex += 1;
+            console.info(`Easter egg input: matched ${key} (${keyIndex}/${secretSequence.length})`);
+
             if (keyIndex === secretSequence.length) {
                 keyIndex = 0;
                 createEggNotice();
             }
         } else {
-            keyIndex = event.key === secretSequence[0] ? 1 : 0;
+            // allow overlapping returns when sequence restarts
+            keyIndex = key === secretSequence[0].toLowerCase() ? 1 : 0;
         }
     });
 }
