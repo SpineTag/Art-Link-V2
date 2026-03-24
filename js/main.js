@@ -268,36 +268,6 @@ function initContactForm() {
     on(form, "submit", handleContactSubmit);
 }
 
-function initEasterEgg() {
-    const secretSequence = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
-    let keyIndex = 0;
-    const createEggNotice = () => {
-        const notice = document.createElement("div");
-        notice.className = "easter-egg-notice";
-        notice.textContent = "🐣 Easter egg unlocked: keep browsing with a smile!";
-        document.body.appendChild(notice);
-        setTimeout(() => notice.remove(), 5500);
-    };
-
-    document.addEventListener("keydown", (event) => {
-        const key = event.key.toLowerCase();
-        const expected = secretSequence[keyIndex].toLowerCase();
-
-        if (key === expected) {
-            keyIndex += 1;
-            console.info(`Easter egg input: matched ${key} (${keyIndex}/${secretSequence.length})`);
-
-            if (keyIndex === secretSequence.length) {
-                keyIndex = 0;
-                createEggNotice();
-            }
-        } else {
-            // allow overlapping returns when sequence restarts
-            keyIndex = key === secretSequence[0].toLowerCase() ? 1 : 0;
-        }
-    });
-}
-
 async function bootstrap() {
     setLoadedState();
 
@@ -318,7 +288,6 @@ async function bootstrap() {
     initFeaturedSlider();
     initGalleryViewer();
     initContactForm();
-    initEasterEgg();
 }
 
 document.addEventListener("DOMContentLoaded", bootstrap);
