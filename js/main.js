@@ -268,6 +268,30 @@ function initContactForm() {
     on(form, "submit", handleContactSubmit);
 }
 
+function initEasterEgg() {
+    const secretSequence = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+    let keyIndex = 0;
+    const createEggNotice = () => {
+        const notice = document.createElement("div");
+        notice.className = "easter-egg-notice";
+        notice.textContent = "🐣 Easter egg unlocked: keep browsing with a smile!";
+        document.body.appendChild(notice);
+        setTimeout(() => notice.remove(), 5500);
+    };
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === secretSequence[keyIndex]) {
+            keyIndex += 1;
+            if (keyIndex === secretSequence.length) {
+                keyIndex = 0;
+                createEggNotice();
+            }
+        } else {
+            keyIndex = event.key === secretSequence[0] ? 1 : 0;
+        }
+    });
+}
+
 async function bootstrap() {
     setLoadedState();
 
@@ -288,6 +312,7 @@ async function bootstrap() {
     initFeaturedSlider();
     initGalleryViewer();
     initContactForm();
+    initEasterEgg();
 }
 
 document.addEventListener("DOMContentLoaded", bootstrap);
