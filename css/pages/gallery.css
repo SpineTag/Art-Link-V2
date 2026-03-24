@@ -70,10 +70,11 @@
 }
 
 .viewer img {
-    width: min(90vw, 1000px);
-    max-height: 86vh;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-soft);
+  max-height: 90%;
+  max-width: 85%;
+  border-radius: 10px;
+  box-shadow: 0 0 40px rgba(255,255,255,.2);
+  transition: transform .4s ease;
 }
 
 .close {
