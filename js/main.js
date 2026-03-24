@@ -210,7 +210,7 @@ function initContactForm() {
         status.classList.remove("success", "error");
     };
 
-    on(form, "submit", async (event) => {
+    const handleContactSubmit = async (event) => {
         event.preventDefault();
         clearStatus();
 
@@ -246,12 +246,12 @@ function initContactForm() {
         } catch (error) {
             console.error(error);
 
-            const isNetworkError = error.message.includes("Failed to fetch") || error.message.includes("ERR_CERT_AUTHORITY_INVALID") || error.message.includes("NetworkError");
+            const isNetworkError = error.message && (error.message.includes("Failed to fetch") || error.message.includes("ERR_CERT_AUTHORITY_INVALID") || error.message.includes("NetworkError"));
 
             if (isNetworkError) {
                 showStatus("Network/SSL issue detected. Falling back to native form submit for reliability.", true);
-                // Note: this bypasses JS submission and uses standard HTML form post.
-                form.removeEventListener("submit", arguments.callee);
+                form.removeEventListener("submit", handleContactSubmit);
+                // native submit may still fail if cert path is invalid, but it is the most compatible fallback
                 form.submit();
                 return;
             }
@@ -263,7 +263,9 @@ function initContactForm() {
                 submitBtn.textContent = "Send Message";
             }
         }
-    });
+    };
+
+    on(form, "submit", handleContactSubmit);
 }
 
 async function bootstrap() {
