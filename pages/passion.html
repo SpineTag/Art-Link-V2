@@ -18,20 +18,75 @@
     <link rel="stylesheet" href="../css/pages/passion.css">
 </head>
 
-<body data-root="..">
+<body data-root=".." class="passion-page">
     <div id="navbar-slot"></div>
 
-    <main class="passion-page">
+    <main>
         <section class="passion-hero">
             <h1>Secret Passion Zone</h1>
             <p>Welcome to the hidden creative overload.</p>
-            <div class="cubes">
+            <div class="cubes" id="cube-container">
                 <div class="cube"></div>
                 <div class="cube"></div>
                 <div class="cube"></div>
                 <div class="cube"></div>
                 <div class="cube"></div>
             </div>
+        </section>
+
+        <section class="passion-section interaction-particles" id="particles-section">
+            <h2>Particle Field</h2>
+            <p>Move your mouse around to disturb the particle field</p>
+            <canvas id="particle-canvas"></canvas>
+        </section>
+
+        <section class="passion-section click-waves" id="waves-section">
+            <h2>Click to Create Waves</h2>
+            <p>Click anywhere to trigger expanding ripple effects</p>
+            <div class="wave-container" id="wave-container"></div>
+        </section>
+
+        <section class="passion-section color-mixer" id="mixer-section">
+            <h2>Color Mixer</h2>
+            <p>Click the orbs to mix colors and create new animations</p>
+            <div class="orb-grid" id="orb-grid">
+                <div class="orb" data-color="#ff7efd"></div>
+                <div class="orb" data-color="#8f5af5"></div>
+                <div class="orb" data-color="#6d6eff"></div>
+                <div class="orb" data-color="#ffcb2e"></div>
+            </div>
+            <div class="mixer-output" id="mixer-output"></div>
+        </section>
+
+        <section class="passion-section rhythm-pulse" id="rhythm-section">
+            <h2>Pulse Rhythm</h2>
+            <p>Type or click to create rhythm beats</p>
+            <input type="text" id="rhythm-input" class="rhythm-input" placeholder="Type something..." />
+            <div class="pulse-orb" id="pulse-orb"></div>
+            <div class="beat-display" id="beat-display"></div>
+        </section>
+
+        <section class="passion-section text-transform" id="transform-section">
+            <h2>Text Distortion</h2>
+            <p>Hover over the text to see it transform</p>
+            <div class="distortion-text" id="distortion-text">
+                <span class="letter">C</span>
+                <span class="letter">R</span>
+                <span class="letter">E</span>
+                <span class="letter">A</span>
+                <span class="letter">T</span>
+                <span class="letter">I</span>
+                <span class="letter">V</span>
+                <span class="letter">I</span>
+                <span class="letter">T</span>
+                <span class="letter">Y</span>
+            </div>
+        </section>
+
+        <section class="passion-section energy-balls" id="energy-section">
+            <h2>Energy Field</h2>
+            <p>Watch the energy balls dance and interact</p>
+            <div class="energy-container" id="energy-container"></div>
         </section>
 
         <section class="passion-content">

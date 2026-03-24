@@ -288,6 +288,161 @@ function initContactForm() {
     on(form, "submit", handleContactSubmit);
 }
 
+function initPassionPage() {
+    // === Particle Canvas ===
+    const particleCanvas = document.getElementById("particle-canvas");
+    if (particleCanvas) {
+        const ctx = particleCanvas.getContext("2d");
+        particleCanvas.width = particleCanvas.offsetWidth;
+        particleCanvas.height = particleCanvas.offsetHeight;
+
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push({
+                x: Math.random() * particleCanvas.width,
+                y: Math.random() * particleCanvas.height,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                radius: Math.random() * 3 + 1,
+                color: `hsl(${Math.random() * 60 + 280}, 100%, 60%)`
+            });
+        }
+
+        let mouseX = particleCanvas.width / 2;
+        let mouseY = particleCanvas.height / 2;
+
+        particleCanvas.addEventListener("mousemove", (e) => {
+            const rect = particleCanvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+
+        const animateParticles = () => {
+            ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+
+            particles.forEach((p) => {
+                const dx = mouseX - p.x;
+                const dy = mouseY - p.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 100) {
+                    p.vx -= (dx / dist) * 0.5;
+                    p.vy -= (dy / dist) * 0.5;
+                }
+
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vx *= 0.99;
+                p.vy *= 0.99;
+
+                if (p.x < 0 || p.x > particleCanvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > particleCanvas.height) p.vy *= -1;
+
+                p.x = Math.max(0, Math.min(particleCanvas.width, p.x));
+                p.y = Math.max(0, Math.min(particleCanvas.height, p.y));
+
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 0.7;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(animateParticles);
+        };
+
+        animateParticles();
+    }
+
+    // === Click Waves ===
+    const waveContainer = document.getElementById("wave-container");
+    if (waveContainer) {
+        const colors = ["#82f4ff", "#ff71ce", "#ffcb2e", "#00ff88"];
+
+        waveContainer.addEventListener("click", (e) => {
+            const rect = waveContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const wave = document.createElement("div");
+            wave.className = "wave";
+            wave.style.left = `${x}px`;
+            wave.style.top = `${y}px`;
+            wave.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+            wave.style.boxShadow = `0 0 20px ${wave.style.borderColor}`;
+
+            waveContainer.appendChild(wave);
+
+            setTimeout(() => wave.remove(), 1200);
+        });
+    }
+
+    // === Color Mixer ===
+    const orbGrid = document.getElementById("orb-grid");
+    const mixerOutput = document.getElementById("mixer-output");
+    if (orbGrid && mixerOutput) {
+        const orbs = orbGrid.querySelectorAll(".orb");
+        let selectedColors = [];
+
+        orbs.forEach((orb) => {
+            orb.addEventListener("click", () => {
+                selectedColors.push(orb.dataset.color);
+                if (selectedColors.length > 3) selectedColors.shift();
+
+                if (selectedColors.length > 0) {
+                    const avgR = Math.round(selectedColors.reduce((sum, c) => sum + parseInt(c.slice(1, 3), 16), 0) / selectedColors.length);
+                    const avgG = Math.round(selectedColors.reduce((sum, c) => sum + parseInt(c.slice(3, 5), 16), 0) / selectedColors.length);
+                    const avgB = Math.round(selectedColors.reduce((sum, c) => sum + parseInt(c.slice(5, 7), 16), 0) / selectedColors.length);
+
+                    const mixedColor = `#${avgR.toString(16).padStart(2, "0")}${avgG.toString(16).padStart(2, "0")}${avgB.toString(16).padStart(2, "0")}`;
+                    mixerOutput.style.background = `radial-gradient(circle, ${mixedColor}, ${mixedColor}aa)`;
+                    mixerOutput.style.color = mixedColor;
+                    mixerOutput.style.boxShadow = `0 0 60px ${mixedColor}`;
+                }
+            });
+        });
+    }
+
+    // === Rhythm Pulse ===
+    const rhythmInput = document.getElementById("rhythm-input");
+    const pulseOrb = document.getElementById("pulse-orb");
+    const beatDisplay = document.getElementById("beat-display");
+    if (rhythmInput && pulseOrb && beatDisplay) {
+        let beatCount = 0;
+
+        rhythmInput.addEventListener("input", () => {
+            beatCount += 1;
+            beatDisplay.textContent = "♪ " + "●".repeat(Math.min(beatCount % 10, 8)) + " ♪";
+            pulseOrb.style.animation = "none";
+            setTimeout(() => {
+                pulseOrb.style.animation = "pulse-color 0.6s ease-in-out";
+            }, 10);
+        });
+    }
+
+    // === Energy Balls ===
+    const energyContainer = document.getElementById("energy-container");
+    if (energyContainer) {
+        const colors = ["#ff71ce", "#82f4ff", "#ffcb2e", "#00ff88"];
+
+        for (let i = 0; i < 6; i++) {
+            const ball = document.createElement("div");
+            ball.className = "energy-ball";
+            ball.style.width = `${Math.random() * 40 + 20}px`;
+            ball.style.height = ball.style.width;
+            ball.style.left = `${Math.random() * 50}%`;
+            ball.style.top = `${Math.random() * 50}%`;
+            ball.style.background = colors[i % colors.length];
+            ball.style.color = colors[i % colors.length];
+            ball.style.animationDuration = `${3 + Math.random() * 4}s`;
+            ball.style.animationDelay = `${Math.random() * 2}s`;
+
+            energyContainer.appendChild(ball);
+        }
+    }
+}
+
 async function bootstrap() {
     setLoadedState();
 
@@ -309,6 +464,10 @@ async function bootstrap() {
     initFeaturedSlider();
     initGalleryViewer();
     initContactForm();
+
+    if (document.querySelector(".passion-page")) {
+        initPassionPage();
+    }
 }
 
 document.addEventListener("DOMContentLoaded", bootstrap);

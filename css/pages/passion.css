@@ -1,14 +1,15 @@
-.passions-page,
 .passion-page {
     min-height: 100vh;
     background: radial-gradient(circle farthest-corner at 20% 20%, #382a66, #1a0f31 45%, #100717 100%);
     color: var(--color-text);
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .passion-hero {
     text-align: center;
     padding: 6rem 1rem 4rem;
+    position: relative;
+    z-index: 1;
 }
 
 .passion-hero h1 {
@@ -46,18 +47,241 @@
 }
 
 .cube:nth-child(even) {
-    animation-duration: 3.7s;
     background: linear-gradient(145deg, #6d6eff, #ffcb2e);
+    animation-duration: 3.7s;
 }
 
+/* Passion Sections */
+.passion-section {
+    padding: 3rem 1rem;
+    position: relative;
+    margin: 2rem 0;
+    border-top: 1px solid rgba(255, 113, 206, 0.2);
+}
+
+.passion-section h2 {
+    text-align: center;
+    font-size: clamp(1.4rem, 4vw, 2.5rem);
+    color: #82f4ff;
+    margin-bottom: 1rem;
+}
+
+.passion-section p {
+    text-align: center;
+    color: #c9b3ff;
+    margin-bottom: 2rem;
+}
+
+/* Particle Section */
+.interaction-particles {
+    background: linear-gradient(135deg, rgba(45, 20, 80, 0.5), rgba(15, 10, 40, 0.7));
+}
+
+#particle-canvas {
+    display: block;
+    margin: 0 auto;
+    border-radius: 1rem;
+    background: radial-gradient(circle at 30% 30%, rgba(100, 50, 150, 0.3), transparent);
+    max-width: 100%;
+    height: auto;
+}
+
+/* Click Waves Section */
+.click-waves {
+    background: linear-gradient(135deg, rgba(20, 50, 80, 0.5), rgba(10, 30, 60, 0.7));
+}
+
+.wave-container {
+    position: relative;
+    width: 100%;
+    height: 22rem;
+    background: radial-gradient(circle, rgba(130, 244, 255, 0.1), transparent 70%);
+    border-radius: 1rem;
+    cursor: crosshair;
+    overflow: hidden;
+}
+
+.wave {
+    position: absolute;
+    border: 2px solid;
+    border-radius: 50%;
+    animation: expand 1.2s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes expand {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+    }
+}
+
+/* Color Mixer Section */
+.color-mixer {
+    background: linear-gradient(135deg, rgba(80, 20, 60, 0.5), rgba(50, 10, 40, 0.7));
+}
+
+.orb-grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.orb {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 30px currentColor;
+    animation: pulse-color 2s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.orb:hover {
+    transform: scale(1.1);
+}
+
+@keyframes pulse-color {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+.mixer-output {
+    width: 8rem;
+    height: 8rem;
+    margin: 0 auto;
+    border-radius: 50%;
+    box-shadow: 0 0 60px currentColor;
+    animation: mixer-spin 3s linear infinite;
+}
+
+@keyframes mixer-spin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Rhythm Pulse Section */
+.rhythm-pulse {
+    background: linear-gradient(135deg, rgba(60, 40, 80, 0.5), rgba(30, 15, 50, 0.7));
+    text-align: center;
+}
+
+.rhythm-input {
+    display: block;
+    margin: 0 auto 2rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #82f4ff;
+    border-radius: 2rem;
+    color: #82f4ff;
+    width: 100%;
+    max-width: 20rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.rhythm-input:focus {
+    border-color: #ff71ce;
+    box-shadow: 0 0 20px rgba(255, 113, 206, 0.3);
+}
+
+.rhythm-input::placeholder {
+    color: rgba(130, 244, 255, 0.5);
+}
+
+.pulse-orb {
+    width: 6rem;
+    height: 6rem;
+    margin: 0 auto;
+    background: radial-gradient(circle, #ff71ce, #8f5af5);
+    border-radius: 50%;
+    box-shadow: 0 0 40px rgba(255, 113, 206, 0.5);
+}
+
+.beat-display {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    color: #ffea4a;
+}
+
+/* Text Distortion Section */
+.text-transform {
+    background: linear-gradient(135deg, rgba(50, 60, 80, 0.5), rgba(20, 30, 50, 0.7));
+}
+
+.distortion-text {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    max-width: 30rem;
+    margin: 0 auto;
+}
+
+.letter {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #82f4ff;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 10px rgba(130, 244, 255, 0.5);
+}
+
+.letter:hover {
+    color: #ff71ce;
+    transform: scale(1.3) rotateZ(15deg) translateY(-10px);
+    text-shadow: 0 0 20px rgba(255, 113, 206, 0.8);
+}
+
+/* Energy Balls Section */
+.energy-balls {
+    background: linear-gradient(135deg, rgba(70, 30, 70, 0.5), rgba(40, 10, 50, 0.7));
+}
+
+.energy-container {
+    position: relative;
+    width: 100%;
+    height: 20rem;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 113, 206, 0.05), transparent);
+    border-radius: 1rem;
+}
+
+.energy-ball {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 20px currentColor;
+    animation: orbit 8s linear infinite;
+}
+
+@keyframes orbit {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(100px, 50px) rotate(360deg);
+    }
+}
+
+/* Main Content */
 .passion-content {
-    padding: 3rem 1rem 4rem;
+    padding: 4rem 1rem;
     text-align: center;
 }
 
 .passion-content h2 {
     font-size: clamp(1.6rem, 5vw, 3rem);
     color: #8ae8ff;
+    margin-bottom: 1rem;
 }
 
 .passion-content p {
@@ -73,6 +297,7 @@
     animation: pulse-glow 1.5s ease-in-out infinite;
 }
 
+/* Animations */
 @keyframes float {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-1rem) rotate(4deg); }
@@ -86,4 +311,28 @@
 @keyframes pulse-glow {
     0%, 100% { color: #ffea4a; text-shadow: 0 0 20px #ffea4a, 0 0 40px #ff9ef8, 0 0 80px #abfaa1; }
     50% { color: #82f4ff; text-shadow: 0 0 24px #82f4ff, 0 0 44px #7d5fff, 0 0 110px #fda3ff; }
+}
+
+@media (max-width: 640px) {
+    .cubes {
+        gap: 0.6rem;
+    }
+
+    .cube {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .orb {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .letter {
+        font-size: 1.6rem;
+    }
+
+    .wave-container {
+        height: 15rem;
+    }
 }
