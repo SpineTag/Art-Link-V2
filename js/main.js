@@ -90,11 +90,13 @@ function initGalleryViewer() {
         viewerImg.alt = img.alt || "Expanded artwork";
         viewer.classList.add("show");
         viewer.setAttribute("aria-hidden", "false");
+        document.body.classList.add("no-scroll");
     };
 
     const closeViewer = () => {
         viewer.classList.remove("show");
         viewer.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("no-scroll");
     };
 
     images.forEach((img) => {
