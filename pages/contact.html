@@ -35,31 +35,27 @@
             <div class="contact-grid">
                 <div class="contact-card">
                     <h2>Send a Message</h2>
-                    <form id="contactForm" action="https://formsubmit.co/ujepenete2020%40gmail.com" method="POST" novalidate aria-describedby="contactStatus">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_subject" value="New message from Art Link website">
-                        <input type="hidden" name="_next" value="https://{YOUR_GITHUB_USER}.github.io/Art-Link-V2/pages/contact.html">
-
+                    <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSeEns-Lx9ggXqKQNGB1wEL9dfS-FUmQMhYPWJpxoZyqfFS4-w/formResponse" method="POST" target="contactFormTarget" novalidate aria-describedby="contactStatus">
                         <div class="form-row">
                             <label for="name">Full Name</label>
-                            <input id="name" name="name" type="text" required placeholder="Your full name">
+                            <input id="name" name="entry.1887019117" type="text" required placeholder="Your full name">
                         </div>
                         <div class="form-row">
                             <label for="email">Email Address</label>
-                            <input id="email" name="email" type="email" required placeholder="you@example.com">
+                            <input id="email" name="entry.560887930" type="email" required placeholder="you@example.com">
                         </div>
                         <div class="form-row">
                             <label for="subject">Subject</label>
-                            <input id="subject" name="subject" type="text" placeholder="Short subject (optional)">
+                            <input id="subject" name="entry.782523406" type="text" placeholder="Short subject (optional)">
                         </div>
                         <div class="form-row">
                             <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="6" required
+                            <textarea id="message" name="entry.1892958023" rows="6" required
                                 placeholder="Write your message here"></textarea>
                         </div>
                         <div class="form-row small">
                             <label>
-                                <input type="checkbox" id="consent" name="consent" required>
+                                <input type="checkbox" id="consent" name="consent">
                                 I agree to be contacted about my message
                             </label>
                         </div>
@@ -68,6 +64,7 @@
                         </div>
                         <div id="contactStatus" class="status sr-only" role="status" aria-live="polite"></div>
                     </form>
+                    <iframe id="contactFormTarget" name="contactFormTarget" class="sr-only hidden-iframe" aria-hidden="true"></iframe>
                 </div>
 
                 <aside class="contact-info">

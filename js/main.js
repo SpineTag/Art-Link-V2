@@ -246,6 +246,30 @@ function initContactForm() {
         }
 
         try {
+            const isGoogleForm = form.action.includes("docs.google.com/forms");
+            if (isGoogleForm) {
+                showStatus("Sending your message...");
+
+                const iframe = document.getElementById("contactFormTarget");
+
+                const handleIframeLoad = () => {
+                    showStatus("Thanks, your message has been sent. We will reply shortly.");
+                    form.reset();
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Send Message";
+                    }
+                    iframe?.removeEventListener("load", handleIframeLoad);
+                };
+
+                if (iframe) {
+                    iframe.addEventListener("load", handleIframeLoad, { once: true });
+                }
+
+                form.submit();
+                return;
+            }
+
             const formData = new FormData(form);
 
             const response = await fetch(form.action, {
