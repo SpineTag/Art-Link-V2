@@ -481,7 +481,14 @@ function initArtworkForm() {
                 body: formData,
             });
 
-            const result = await response.json();
+            let result;
+            try {
+                result = await response.json();
+            } catch (parseError) {
+                const text = await response.text();
+                throw new Error(text || "Submission failed.");
+            }
+
             if (!response.ok || !result.success) {
                 throw new Error(result.message || "Submission failed.");
             }

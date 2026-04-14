@@ -1,5 +1,3 @@
-const { createClient } = require("@supabase/supabase-js");
-
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -7,7 +5,10 @@ if (!supabaseUrl || !supabaseKey) {
   console.error("Missing Supabase environment variables: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+async function createSupabaseClient() {
+  const { createClient } = await import("@supabase/supabase-js");
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 module.exports = async (req, res) => {
   if (req.method !== "GET") {
@@ -16,6 +17,7 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const supabase = await createSupabaseClient();
     const { data, error } = await supabase
       .from("artworks")
       .select("*")

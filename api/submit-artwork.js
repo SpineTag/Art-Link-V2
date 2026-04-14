@@ -1,4 +1,3 @@
-const { createClient } = require("@supabase/supabase-js");
 const { IncomingForm } = require("formidable");
 const fs = require("fs");
 
@@ -9,7 +8,10 @@ if (!supabaseUrl || !supabaseKey) {
   console.error("Missing Supabase environment variables: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+async function createSupabaseClient() {
+  const { createClient } = await import("@supabase/supabase-js");
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 const parseForm = (req) =>
   new Promise((resolve, reject) => {
@@ -41,6 +43,8 @@ module.exports = async (req, res) => {
       artworkPrice,
       consent,
     } = fields;
+
+    const supabase = await createSupabaseClient();
 
     if (
       !artistName ||
