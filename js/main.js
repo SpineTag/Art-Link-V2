@@ -333,6 +333,175 @@ function initContactForm() {
     on(form, "submit", handleContactSubmit);
 }
 
+async function loadArtworkGallery() {
+    const galleryGrid = qs("#galleryGrid");
+    const viewer = qs(".viewer");
+    const artworkInfo = qs("#artworkInfo");
+
+    if (!galleryGrid || !viewer || !artworkInfo) {
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/artworks");
+        if (!response.ok) {
+            throw new Error("Unable to fetch artworks.");
+        }
+
+        const artworks = await response.json();
+        galleryGrid.innerHTML = "";
+
+        artworks.forEach((artwork) => {
+            const item = document.createElement("div");
+            item.className = "item";
+            item.innerHTML = `<img src="${artwork.image_url}" alt="${artwork.artwork_title}" data-artwork-id="${artwork.id}">`;
+            galleryGrid.appendChild(item);
+        });
+
+        initArtworkViewer(artworks);
+    } catch (error) {
+        console.error("Failed to load artworks:", error);
+    }
+}
+
+function initArtworkViewer(artworks) {
+    const viewer = qs(".viewer");
+    const viewerImg = qs("#viewer-img");
+    const closeBtn = qs(".close", viewer || document);
+    const galleryGrid = qs("#galleryGrid");
+    const images = qsa("#galleryGrid .item img");
+    const artworkInfo = qs("#artworkInfo");
+    const artworkTitle = qs("#artworkTitle");
+    const artworkDescription = qs("#artworkDescription");
+    const artistName = qs("#artistName");
+    const artworkCategory = qs("#artworkCategory");
+    const artworkPrice = qs("#artworkPrice");
+    const contactArtistBtn = qs("#contactArtist");
+
+    if (!viewer || !viewerImg || !closeBtn || !galleryGrid || !images.length) {
+        return;
+    }
+
+    const openViewer = (img) => {
+        const artworkId = img.dataset.artworkId;
+        const artwork = artworks.find((item) => item.id === artworkId);
+        if (!artwork) {
+            return;
+        }
+
+        viewerImg.src = artwork.image_url;
+        viewerImg.alt = artwork.artwork_title;
+        artworkTitle.textContent = artwork.artwork_title;
+        artworkDescription.textContent = artwork.artwork_description;
+        artistName.textContent = artwork.artist_name;
+        artworkCategory.textContent = artwork.artwork_category;
+        artworkPrice.textContent = artwork.artwork_price ? `Price: $${artwork.artwork_price}` : "";
+        contactArtistBtn.onclick = () => {
+            window.location.href = `contact.html?artist=${encodeURIComponent(artwork.artist_email)}&subject=${encodeURIComponent(`Inquiry about "${artwork.artwork_title}"`)}`;
+        };
+        artworkInfo.style.display = "block";
+
+        viewer.classList.add("show");
+        viewer.setAttribute("aria-hidden", "false");
+        document.body.classList.add("no-scroll");
+    };
+
+    images.forEach((img) => {
+        on(img, "click", () => openViewer(img));
+    });
+
+    on(closeBtn, "click", () => {
+        viewer.classList.remove("show");
+        viewer.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("no-scroll");
+        artworkInfo.style.display = "none";
+    });
+
+    on(viewer, "click", (event) => {
+        if (event.target === viewer) {
+            viewer.classList.remove("show");
+            viewer.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("no-scroll");
+            artworkInfo.style.display = "none";
+        }
+    });
+
+    on(document, "keydown", (event) => {
+        if (event.key === "Escape") {
+            viewer.classList.remove("show");
+            viewer.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("no-scroll");
+            artworkInfo.style.display = "none";
+        }
+    });
+}
+
+function initArtworkForm() {
+    const form = document.getElementById("artworkForm");
+    const status = document.getElementById("submitStatus");
+
+    if (!form || !status) {
+        return;
+    }
+
+    const submitBtn = qs('button[type="submit"]', form);
+
+    const showStatus = (message, isError = false) => {
+        status.textContent = message;
+        status.classList.remove("sr-only");
+        status.classList.remove("success", "error");
+        status.classList.add(isError ? "error" : "success");
+    };
+
+    const clearStatus = () => {
+        status.textContent = "";
+        status.classList.add("sr-only");
+        status.classList.remove("success", "error");
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        clearStatus();
+
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            showStatus("Please complete all required fields before submitting.", true);
+            return;
+        }
+
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitting...";
+        }
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Submission failed.");
+            }
+
+            showStatus(result.message || "Artwork submitted successfully.");
+            form.reset();
+        } catch (error) {
+            console.error(error);
+            showStatus(error.message || "An error occurred while submitting your artwork.", true);
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Artwork";
+            }
+        }
+    };
+
+    on(form, "submit", handleSubmit);
+}
+
 function initPassionPage() {
     // === Particle Canvas ===
     const particleCanvas = document.getElementById("particle-canvas");
@@ -507,8 +676,11 @@ async function bootstrap() {
     }
 
     initFeaturedSlider();
-    initGalleryViewer();
+    if (document.querySelector("#galleryGrid")) {
+        loadArtworkGallery();
+    }
     initContactForm();
+    initArtworkForm();
 
     if (document.querySelector(".passion-page")) {
         initPassionPage();
