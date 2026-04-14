@@ -1,0 +1,24 @@
+{
+  "name": "art-link-v2",
+  "version": "1.0.0",
+  "description": "Art Link - Where imagination meets the digital canvas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "lint": "echo 'No linter configured yet'",
+    "test": "echo 'No tests configured yet'"
+  },
+  "keywords": [
+    "art",
+    "gallery",
+    "portfolio"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7"
+  }
+}
