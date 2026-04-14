@@ -28,26 +28,130 @@
             <p class="gallery-sub">A curated selection of visual experiments</p>
         </header>
 
-        <section class="gallery-grid container" aria-label="Artwork gallery">
-            <div class="item"><img src="https://picsum.photos/900/1200?1" alt="Gallery item 1"></div>
-            <div class="item tall"><img src="https://picsum.photos/900/1500?2" alt="Gallery item 2"></div>
-            <div class="item wide"><img src="https://picsum.photos/1400/900?3" alt="Gallery item 3"></div>
-            <div class="item"><img src="https://picsum.photos/900/1200?4" alt="Gallery item 4"></div>
-            <div class="item tall"><img src="https://picsum.photos/900/1500?5" alt="Gallery item 5"></div>
-            <div class="item"><img src="https://picsum.photos/900/1200?6" alt="Gallery item 6"></div>
-            <div class="item wide"><img src="https://picsum.photos/1400/900?7" alt="Gallery item 7"></div>
-            <div class="item tall"><img src="https://picsum.photos/900/1500?8" alt="Gallery item 8"></div>
+        <section class="gallery-grid container" aria-label="Artwork gallery" id="galleryGrid">
+            <!-- Artworks will be loaded here -->
         </section>
 
         <div class="viewer" aria-hidden="true">
             <button type="button" class="close" aria-label="Close viewer">&times;</button>
             <img id="viewer-img" src="" alt="Expanded artwork">
+            <div class="artwork-info" id="artworkInfo">
+                <h3 id="artworkTitle"></h3>
+                <p id="artworkDescription"></p>
+                <p><strong>Artist:</strong> <span id="artistName"></span></p>
+                <p><strong>Category:</strong> <span id="artworkCategory"></span></p>
+                <p id="artworkPrice"></p>
+                <button id="contactArtist" class="btn secondary">Contact Artist</button>
+            </div>
         </div>
+    </main>
     </main>
 
     <div id="footer-slot"></div>
 
     <script type="module" src="../js/main.js"></script>
+    <script type="module">
+        import { on, qs, qsa } from "../js/utils/helpers.js";
+
+        async function loadArtworks() {
+            try {
+                const response = await fetch("/data/artworks.json");
+                const artworks = await response.json();
+                const approvedArtworks = artworks.filter(artwork => artwork.approved);
+
+                const galleryGrid = qs("#galleryGrid");
+                galleryGrid.innerHTML = "";
+
+                approvedArtworks.forEach(artwork => {
+                    const item = document.createElement("div");
+                    item.className = "item";
+                    item.innerHTML = `<img src="${artwork.imagePath}" alt="${artwork.artworkTitle}" data-artwork-id="${artwork.id}">`;
+                    galleryGrid.appendChild(item);
+                });
+
+                // Reinitialize gallery viewer with new items
+                initGalleryViewer();
+            } catch (error) {
+                console.error("Failed to load artworks:", error);
+            }
+        }
+
+        function initGalleryViewer() {
+            const viewer = qs(".viewer");
+            const viewerImg = qs("#viewer-img");
+            const closeBtn = qs(".close");
+            const galleryGrid = qs("#galleryGrid");
+            const images = qsa("#galleryGrid .item img");
+            const artworkInfo = qs("#artworkInfo");
+            const artworkTitle = qs("#artworkTitle");
+            const artworkDescription = qs("#artworkDescription");
+            const artistName = qs("#artistName");
+            const artworkCategory = qs("#artworkCategory");
+            const artworkPrice = qs("#artworkPrice");
+            const contactArtistBtn = qs("#contactArtist");
+
+            if (!viewer || !viewerImg || !closeBtn || !galleryGrid || !images.length) {
+                return;
+            }
+
+            const openViewer = (img) => {
+                const artworkId = img.dataset.artworkId;
+                fetch("/data/artworks.json")
+                    .then(response => response.json())
+                    .then(artworks => {
+                        const artwork = artworks.find(a => a.id === artworkId);
+                        if (artwork) {
+                            viewerImg.src = img.src;
+                            viewerImg.alt = img.alt;
+                            artworkTitle.textContent = artwork.artworkTitle;
+                            artworkDescription.textContent = artwork.artworkDescription;
+                            artistName.textContent = artwork.artistName;
+                            artworkCategory.textContent = artwork.artworkCategory;
+                            artworkPrice.textContent = artwork.artworkPrice ? `Price: $${artwork.artworkPrice}` : "";
+                            contactArtistBtn.onclick = () => {
+                                window.location.href = `contact.html?artist=${encodeURIComponent(artwork.artistEmail)}&subject=${encodeURIComponent(`Inquiry about "${artwork.artworkTitle}"`)}`;
+                            };
+                            artworkInfo.style.display = "block";
+                        }
+                    });
+
+                viewer.classList.add("show");
+                viewer.setAttribute("aria-hidden", "false");
+                document.body.classList.add("no-scroll");
+            };
+
+            images.forEach(img => {
+                on(img, "click", () => openViewer(img));
+            });
+
+            on(closeBtn, "click", () => {
+                viewer.classList.remove("show");
+                viewer.setAttribute("aria-hidden", "true");
+                document.body.classList.remove("no-scroll");
+                artworkInfo.style.display = "none";
+            });
+
+            on(viewer, "click", (event) => {
+                if (event.target === viewer) {
+                    viewer.classList.remove("show");
+                    viewer.setAttribute("aria-hidden", "true");
+                    document.body.classList.remove("no-scroll");
+                    artworkInfo.style.display = "none";
+                }
+            });
+
+            on(document, "keydown", (event) => {
+                if (event.key === "Escape") {
+                    viewer.classList.remove("show");
+                    viewer.setAttribute("aria-hidden", "true");
+                    document.body.classList.remove("no-scroll");
+                    artworkInfo.style.display = "none";
+                }
+            });
+        }
+
+        loadArtworks();
+    </script>
 </body>
 
 </html>

@@ -215,6 +215,27 @@ function initContactForm() {
         return;
     }
 
+    // Pre-fill form from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const artistEmail = urlParams.get("artist");
+    const subject = urlParams.get("subject");
+    if (artistEmail) {
+        const artistEmailHidden = form.querySelector("#artistEmailHidden");
+        if (artistEmailHidden) {
+            artistEmailHidden.value = artistEmail;
+        }
+        const messageField = form.querySelector('textarea[name="entry.1892958023"]');
+        if (messageField) {
+            messageField.value = `Hi, I'm interested in your artwork. Please contact me.\n\n`;
+        }
+    }
+    if (subject) {
+        const subjectField = form.querySelector('input[name="entry.782523406"]');
+        if (subjectField) {
+            subjectField.value = subject;
+        }
+    }
+
     const submitBtn = qs('button[type="submit"]', form);
 
     const showStatus = (message, isError = false) => {
