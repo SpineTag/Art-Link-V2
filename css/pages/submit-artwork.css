@@ -1,7 +1,7 @@
 /* Submit Artwork Page Styles */
 
 .submit-wrapper {
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-lg) 0;
 }
 
 .submit-card {
@@ -40,4 +40,20 @@
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+}
+
+.skip-link {
+    position: absolute;
+    left: 0.6rem;
+    top: -100px;
+    padding: 0.5rem 0.8rem;
+    background: var(--color-bg-panel);
+    color: var(--color-text);
+    border-radius: var(--radius-sm);
+    z-index: var(--z-tooltip);
+    transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+    top: 0.8rem;
 }
