@@ -109,6 +109,20 @@ function initGalleryViewer() {
     const openViewer = (img) => {
         viewerImg.src = img.src;
         viewerImg.alt = img.alt || "Expanded artwork";
+        
+        // Update artwork info from dataset
+        const titleEl = document.getElementById("artworkTitle");
+        const descEl = document.getElementById("artworkDescription");
+        const artistEl = document.getElementById("artistName");
+        const categoryEl = document.getElementById("artworkCategory");
+        const priceEl = document.getElementById("artworkPrice");
+        
+        if (titleEl) titleEl.textContent = img.dataset.title || img.alt;
+        if (descEl) descEl.textContent = img.dataset.description || '';
+        if (artistEl) artistEl.textContent = img.dataset.artist || 'Unknown Artist';
+        if (categoryEl) categoryEl.textContent = img.dataset.category || '';
+        if (priceEl) priceEl.textContent = img.dataset.price ? `Price: ${img.dataset.price}` : '';
+        
         viewer.classList.add("show");
         viewer.setAttribute("aria-hidden", "false");
         document.body.classList.add("no-scroll");
@@ -135,19 +149,39 @@ function initGalleryViewer() {
         return "1400/900";
     };
 
-    let nextImageIndex = galleryGrid.querySelectorAll(".item").length + 1;
-    const infiniteBatchSize = 4;
+    // Random artwork data for metadata
+    const categories = ['painting', 'sculpture', 'photography', 'digital', 'mixed-media', 'other'];
+    const firstNames = ['Alex', 'Jordan', 'Morgan', 'Casey', 'Riley', 'Quinn', 'Avery', 'Sage', 'River', 'Phoenix'];
+    const lastNames = ['Chen', 'Williams', 'Garcia', 'Patel', 'Kim', 'Nguyen', 'Martinez', 'Johnson', 'Brown', 'Lee'];
+    const titles = ['Ethereal Dreams', 'Silent Echoes', 'Urban Fragments', 'Natural Forms', 'Abstract Journey', 'Color Studies', 'Light & Shadow', 'Memory Lane', 'Inner Space', 'Transition', 'Horizon', 'Composition', 'Reflection', 'Momentum', 'Genesis'];
+    const descriptions = ['An exploration of form and color through layered textures.', 'Capturing the essence of movement in static medium.', 'A meditation on the relationship between light and space.', 'Digital manipulation of traditional photographic elements.', 'Mixed media piece combining found objects and paint.', 'Abstract representation of emotional states.'];
+
+    const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const hasPrice = Math.random() > 0.5;
 
     const createGalleryItem = (index) => {
         const size = getImageSize(index);
         const url = `https://picsum.photos/${size}?${Date.now()}-${index}`;
-        const alt = `Gallery item ${index}`;
+        
+        // Generate random metadata
+        const title = `${randomFrom(titles)} ${String(index).padStart(2, '0')}`;
+        const artist = `${randomFrom(firstNames)} ${randomFrom(lastNames)}`;
+        const category = randomFrom(categories);
+        const description = randomFrom(descriptions);
+        const price = hasPrice ? `$${(Math.random() * 500 + 50).toFixed(2)}` : '';
+        
+        const alt = title;
         const item = document.createElement("div");
         item.className = `item ${index % 4 === 0 ? "wide" : index % 5 === 0 ? "tall" : ""}`.trim();
 
         const img = document.createElement("img");
         img.src = url;
         img.alt = alt;
+        img.dataset.title = title;
+        img.dataset.description = description;
+        img.dataset.artist = artist;
+        img.dataset.category = category;
+        img.dataset.price = price;
         item.appendChild(img);
 
         attachImageClick(img);
