@@ -376,26 +376,34 @@ async function loadArtworkGallery() {
         return;
     }
 
+    let artworks = [];
+
     try {
         const response = await fetch("/api/artworks");
-        if (!response.ok) {
+        if (response.ok) {
+            artworks = await response.json();
+        } else {
             throw new Error("Unable to fetch artworks.");
         }
-
-        const artworks = await response.json();
-        galleryGrid.innerHTML = "";
-
-        artworks.forEach((artwork) => {
-            const item = document.createElement("div");
-            item.className = "item";
-            item.innerHTML = `<img src="${artwork.image_url}" alt="${artwork.artwork_title}" data-artwork-id="${artwork.id}">`;
-            galleryGrid.appendChild(item);
-        });
-
-        initArtworkViewer(artworks);
     } catch (error) {
-        console.error("Failed to load artworks:", error);
+        console.warn("API unavailable, loading random fallback gallery.", error);
+        artworks = generateFallbackArtworks(14);
     }
+
+    if (!Array.isArray(artworks) || artworks.length === 0) {
+        artworks = generateFallbackArtworks(14);
+    }
+
+    galleryGrid.innerHTML = "";
+
+    artworks.forEach((artwork) => {
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `<img src="${artwork.image_url}" alt="${artwork.artwork_title}" data-artwork-id="${artwork.id}">`;
+        galleryGrid.appendChild(item);
+    });
+
+    initArtworkViewer(artworks);
 }
 
 function initArtworkViewer(artworks) {
@@ -469,6 +477,80 @@ function initArtworkViewer(artworks) {
         }
     });
 }
+
+const FALLBACK_CATEGORIES = [
+    "Painting",
+    "Sculpture",
+    "Photography",
+    "Digital Art",
+    "Mixed Media",
+    "Illustration"
+];
+
+const FALLBACK_TITLES = [
+    "Ethereal Dreams",
+    "Silent Echoes",
+    "Urban Fragments",
+    "Light & Shadow",
+    "Chromatic Motion",
+    "Nocturnal Bloom",
+    "Abstract Horizon",
+    "Paper Skies",
+    "Synthetic Nature",
+    "Glowing Memory"
+];
+
+const FALLBACK_DESCRIPTIONS = [
+    "A study in contrast and movement.",
+    "Soft textures layered with vibrant tones.",
+    "An experimental piece that balances calm and chaos.",
+    "A dreamy composition built from light and color.",
+    "Minimalist forms reimagined through digital media.",
+    "A playful encounter between structure and fluidity."
+];
+
+const FALLBACK_ARTISTS = [
+    "Avery Lane",
+    "Jordan Sparks",
+    "River Hale",
+    "Casey Moon",
+    "Sage Hart",
+    "Rowan Vale",
+    "Pax Reed",
+    "Emery Fox"
+];
+
+const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+const getRandomImageSize = () => {
+    const sizeOptions = ["900/1200", "900/1500", "1400/900", "1200/900"];
+    return randomFrom(sizeOptions);
+};
+
+const createFallbackArtwork = (index) => {
+    const seed = Math.floor(Math.random() * 10000);
+    const imageSize = getRandomImageSize();
+    const title = `${randomFrom(FALLBACK_TITLES)} ${index}`;
+    const category = randomFrom(FALLBACK_CATEGORIES);
+    const artist = randomFrom(FALLBACK_ARTISTS);
+    const description = randomFrom(FALLBACK_DESCRIPTIONS);
+    const price = Math.random() > 0.5 ? (Math.random() * 300 + 40).toFixed(2) : "";
+
+    return {
+        id: `fallback-${index}-${seed}`,
+        artwork_title: title,
+        artwork_description: description,
+        artist_name: artist,
+        artwork_category: category,
+        artwork_price: price,
+        artist_email: "contact@artlink.example",
+        image_url: `https://picsum.photos/seed/${seed}/${imageSize}`
+    };
+};
+
+const generateFallbackArtworks = (count = 12) => {
+    return Array.from({ length: count }, (_, index) => createFallbackArtwork(index + 1));
+};
 
 function initArtworkForm() {
     const form = document.getElementById("artworkForm");
