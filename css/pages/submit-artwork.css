@@ -1,7 +1,12 @@
 /* Submit Artwork Page Styles */
 
+.page-hero {
+    padding-top: calc(var(--navbar-height) + var(--spacing-md));
+    padding-bottom: var(--spacing-sm);
+}
+
 .submit-wrapper {
-    padding: var(--spacing-lg) 0;
+    padding: var(--spacing-md) 0;
 }
 
 .submit-card {
