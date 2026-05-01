@@ -592,29 +592,30 @@ function initArtworkForm() {
 
         try {
             const isGoogleForm = form.action.includes("docs.google.com/forms");
+                const formViewUrl = form.dataset.googleViewUrl;
 
-            if (isGoogleForm) {
-                showStatus("Sending your artwork submission...");
+                if (isGoogleForm && formViewUrl) {
+                    showStatus("Opening the Google Form in a new tab. Please complete the submission there.");
 
-                const iframe = document.getElementById("artworkFormTarget");
+                    const params = new URLSearchParams();
+                    params.set("entry.268652548", form.artistName.value);
+                    params.set("entry.913978995", form.artistEmail.value);
+                    params.set("entry.852011739", form.artistBio.value);
+                    params.set("entry.1667814257", form.artworkTitle.value);
+                    params.set("entry.2009632723", form.artworkDescription.value);
+                    params.set("entry.260939664", form.artworkCategory.value);
+                    params.set("entry.716626582", form.artworkPrice.value);
+                    if (form.consent.checked) {
+                        params.set("entry.277459112", "I agree to have my artwork displayed on the website and allow visitors to contact me");
+                    }
 
-                const handleIframeLoad = () => {
-                    showStatus("Artwork submission sent. Thank you!");
+                    const fallbackUrl = `${formViewUrl}?${params.toString()}`;
+                    window.open(fallbackUrl, "_blank");
                     form.reset();
                     if (submitBtn) {
                         submitBtn.disabled = false;
                         submitBtn.textContent = "Submit Artwork";
                     }
-                    iframe?.removeEventListener("load", handleIframeLoad);
-                };
-
-                if (iframe) {
-                    iframe.addEventListener("load", handleIframeLoad, { once: true });
-                }
-
-                form.submit();
-                return;
-            }
 
             const formData = new FormData(form);
             const response = await fetch(form.action, {
