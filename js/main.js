@@ -591,6 +591,31 @@ function initArtworkForm() {
         }
 
         try {
+            const isGoogleForm = form.action.includes("docs.google.com/forms");
+
+            if (isGoogleForm) {
+                showStatus("Sending your artwork submission...");
+
+                const iframe = document.getElementById("artworkFormTarget");
+
+                const handleIframeLoad = () => {
+                    showStatus("Artwork submission sent. Thank you!");
+                    form.reset();
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Submit Artwork";
+                    }
+                    iframe?.removeEventListener("load", handleIframeLoad);
+                };
+
+                if (iframe) {
+                    iframe.addEventListener("load", handleIframeLoad, { once: true });
+                }
+
+                form.submit();
+                return;
+            }
+
             const formData = new FormData(form);
             const response = await fetch(form.action, {
                 method: "POST",
@@ -613,6 +638,16 @@ function initArtworkForm() {
             form.reset();
         } catch (error) {
             console.error(error);
+
+            const isNetworkError = error.message && (error.message.includes("Failed to fetch") || error.message.includes("ERR_CERT_AUTHORITY_INVALID") || error.message.includes("NetworkError"));
+
+            if (isNetworkError) {
+                showStatus("Network issue detected. Falling back to native submit.", true);
+                form.removeEventListener("submit", handleSubmit);
+                form.submit();
+                return;
+            }
+
             showStatus(error.message || "An error occurred while submitting your artwork.", true);
         } finally {
             if (submitBtn) {

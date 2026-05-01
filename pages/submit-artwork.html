@@ -34,51 +34,50 @@
         <section class="submit-wrapper container">
             <div class="submit-card">
                 <h2>Artwork Details</h2>
-                <form id="artworkForm" action="/api/submit-artwork" method="POST" enctype="multipart/form-data" novalidate aria-describedby="submitStatus">
+                <form id="artworkForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdiox3ORipHBCllIiCAV9tJTR2yJuJEIYL7Sq8enU3KTuCRkg/formResponse" method="POST" target="artworkFormTarget" novalidate aria-describedby="submitStatus">
                     <div class="form-row">
                         <label for="artistName">Artist Name</label>
-                        <input id="artistName" name="artistName" type="text" required placeholder="Your full name">
+                        <input id="artistName" name="entry.268652548" type="text" required placeholder="Your full name">
                     </div>
                     <div class="form-row">
                         <label for="artistEmail">Email Address</label>
-                        <input id="artistEmail" name="artistEmail" type="email" required placeholder="you@example.com">
+                        <input id="artistEmail" name="entry.913978995" type="email" required placeholder="you@example.com">
                     </div>
                     <div class="form-row">
                         <label for="artistBio">Artist Bio (Optional)</label>
-                        <textarea id="artistBio" name="artistBio" rows="3" placeholder="Tell us about yourself"></textarea>
+                        <textarea id="artistBio" name="entry.852011739" rows="3" placeholder="Tell us about yourself"></textarea>
                     </div>
                     <div class="form-row">
                         <label for="artworkTitle">Artwork Title</label>
-                        <input id="artworkTitle" name="artworkTitle" type="text" required placeholder="Title of your artwork">
+                        <input id="artworkTitle" name="entry.1667814257" type="text" required placeholder="Title of your artwork">
                     </div>
                     <div class="form-row">
                         <label for="artworkDescription">Description</label>
-                        <textarea id="artworkDescription" name="artworkDescription" rows="4" required placeholder="Describe your artwork"></textarea>
+                        <textarea id="artworkDescription" name="entry.2009632723" rows="4" required placeholder="Describe your artwork"></textarea>
                     </div>
                     <div class="form-row">
                         <label for="artworkCategory">Category</label>
-                        <select id="artworkCategory" name="artworkCategory" required>
+                        <select id="artworkCategory" name="entry.260939664" required>
                             <option value="">Select a category</option>
-                            <option value="painting">Painting</option>
-                            <option value="sculpture">Sculpture</option>
-                            <option value="photography">Photography</option>
-                            <option value="digital">Digital Art</option>
-                            <option value="mixed-media">Mixed Media</option>
-                            <option value="other">Other</option>
+                            <option value="Painting">Painting</option>
+                            <option value="Sculpture">Sculpture</option>
+                            <option value="Photography">Photography</option>
+                            <option value="Digital Art">Digital Art</option>
+                            <option value="Mixed Media">Mixed Media</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="form-row">
                         <label for="artworkImage">Artwork Image</label>
-                        <input id="artworkImage" name="artworkImage" type="file" accept="image/*" required>
-                        <small>Supported formats: JPG, PNG, GIF. Max size: 5MB</small>
+                        <p class="muted">Image upload is not supported with Google Forms submission. Please send images separately if needed.</p>
                     </div>
                     <div class="form-row">
                         <label for="artworkPrice">Price (Optional)</label>
-                        <input id="artworkPrice" name="artworkPrice" type="number" min="0" step="0.01" placeholder="0.00">
+                        <input id="artworkPrice" name="entry.716626582" type="number" min="0" step="0.01" placeholder="0.00">
                     </div>
                     <div class="form-row small">
                         <label>
-                            <input type="checkbox" id="consent" name="consent" required>
+                            <input type="checkbox" id="consent" name="entry.277459112" value="I agree to have my artwork displayed on the website and allow visitors to contact me" required>
                             I agree to have my artwork displayed on the website and allow visitors to contact me
                         </label>
                     </div>
@@ -87,6 +86,7 @@
                     </div>
                     <div id="submitStatus" class="status sr-only" role="status" aria-live="polite"></div>
                 </form>
+                <iframe id="artworkFormTarget" name="artworkFormTarget" class="sr-only hidden-iframe" aria-hidden="true"></iframe>
             </div>
         </section>
     </main>
