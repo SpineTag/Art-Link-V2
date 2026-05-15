@@ -40,43 +40,6 @@ app.use((req, res, next) => {
     next();
 });
 
-async function fetchArtworkData() {
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-    if (supabaseUrl && supabaseKey) {
-        try {
-            const { createClient } = await import("@supabase/supabase-js");
-            const supabase = createClient(supabaseUrl, supabaseKey);
-            const { data, error } = await supabase
-                .from("artworks")
-                .select("*")
-                .eq("approved", true)
-                .order("submitted_at", { ascending: false });
-
-            if (error) {
-                console.error("Supabase fetch error:", error);
-            } else if (Array.isArray(data)) {
-                return data;
-            }
-        } catch (error) {
-            console.error("Supabase client error:", error);
-        }
-    }
-
-    const artworksFile = path.join(__dirname, "data", "artworks.json");
-    if (fs.existsSync(artworksFile)) {
-        try {
-            const raw = fs.readFileSync(artworksFile, "utf8");
-            return JSON.parse(raw);
-        } catch (error) {
-            console.error("Local artwork read error:", error);
-        }
-    }
-
-    return [];
-}
-
 // Email transporter config (set via env vars)
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || "smtp.example.com",
@@ -113,16 +76,6 @@ app.post("/api/contact", async (req, res) => {
     } catch (error) {
         console.error("Contact API error:", error);
         return res.status(500).json({ success: false, message: "Unable to send message right now, please try again later." });
-    }
-});
-
-app.get("/api/artworks", async (req, res) => {
-    try {
-        const artworks = await fetchArtworkData();
-        return res.json(artworks);
-    } catch (error) {
-        console.error("Artwork API error:", error);
-        return res.status(500).json([]);
     }
 });
 
